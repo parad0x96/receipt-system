@@ -18,7 +18,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request=request, user=user)
-            return redirect("receipts")
+            return redirect("receipt-list")
     else:
         form = SignUpForm()
     return render(request, "account/signup.html", {"form": form})
@@ -54,7 +54,7 @@ class ReceiptViewSet(ModelViewSet):
                 return redirect("receipt-list")
         else:
             form = ReceiptForm()
-        return render(request, "receipt/receipt_form.html", {"form": form})
+        return render(request, "receipt/receipt_form.html", {"form": form}, status=200)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -66,6 +66,7 @@ class ReceiptViewSet(ModelViewSet):
         return Response(
             {"form": form, "instance": instance},
             template_name="receipt/receipt_form.html",
+            status=200
         )
 
     def destroy(self, request, *args, **kwargs):
