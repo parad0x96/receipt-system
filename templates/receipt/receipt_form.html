@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if instance %}
+  <h1>Update Receipt</h1>
+  {% else %}
+  <h1>Create Receipt</h1>
+  {% endif %}
+  <form method="post" action="{% if instance %}{% url 'receipt-update' pk=instance.pk %}{% else %}{% url 'receipt-create' %}{% endif %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+  <a href="{% url 'receipt-list' %}">Back to Receipt List</a>
+{% endblock %}
